@@ -1,19 +1,19 @@
-import { LayoutModule } from '@angular/cdk/layout';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { LayoutModule } from '@angular/cdk/layout'
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import {
   MatButtonModule,
   MatIconModule,
   MatListModule,
   MatSidenavModule,
   MatToolbarModule,
-} from '@angular/material';
+} from '@angular/material'
 
-import { SideNavComponent } from './side-nav.component';
+import { SideNavComponent } from './side-nav.component'
 
 describe('SideNavComponent', () => {
-  let component: SideNavComponent;
-  let fixture: ComponentFixture<SideNavComponent>;
+  let component: SideNavComponent
+  let fixture: ComponentFixture<SideNavComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -26,17 +26,17 @@ describe('SideNavComponent', () => {
         MatListModule,
         MatSidenavModule,
         MatToolbarModule,
-      ]
-    }).compileComponents();
-  }));
+      ],
+    }).compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SideNavComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(SideNavComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should compile', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

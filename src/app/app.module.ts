@@ -8,11 +8,22 @@ import { InventoryModule } from './inventory/inventory.module'
 import { PosModule } from './pos/pos.module'
 import { UserModule } from './user/user.module'
 import { HomeComponent } from './home/home.component'
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SideNavComponent } from './side-nav/side-nav.component';
-import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material'
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { SideNavComponent } from './side-nav/side-nav.component'
+import { LayoutModule } from '@angular/cdk/layout'
+import {
+  MatToolbarModule,
+  MatButtonModule,
+  MatSidenavModule,
+  MatIconModule,
+  MatListModule,
+} from '@angular/material'
+import { HttpClientModule } from '@angular/common/http'
+import { FlexLayoutModule } from '@angular/flex-layout'
+import { MaterialModule } from './material.module'
+
+
 
 
 @NgModule({
@@ -31,9 +42,12 @@ import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, Mat
     MatSidenavModule,
     MatIconModule,
     MatListModule,
+    HttpClientModule,
+    FlexLayoutModule,
+    MaterialModule,
     
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
