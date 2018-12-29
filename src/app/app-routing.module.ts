@@ -5,12 +5,16 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { ManagerHomeComponent } from './manager/manager-home/manager-home.component'
 import { ManagerModule } from './manager/manager.module';
 import { UserModule } from './user/user.module';
+import { PosModule } from './pos/pos.module';
+import { InventoryModule } from './inventory/inventory.module';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'manager', loadChildren:()=>ManagerModule},
   { path: 'user', loadChildren:()=>UserModule }, 
+  { path: 'pos', loadChildren:()=>PosModule },
+  { path: 'inventory', loadChildren:()=>InventoryModule },
   { path: '**', component: PageNotFoundComponent },
 
 ]
