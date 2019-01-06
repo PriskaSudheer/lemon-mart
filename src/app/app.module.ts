@@ -22,12 +22,13 @@ import {
 import { HttpClientModule } from '@angular/common/http'
 import { FlexLayoutModule } from '@angular/flex-layout'
 import { MaterialModule } from './material.module'
-
-
+import { AuthService } from './auth/auth.service';
+import { LoginComponent } from './login/login.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, PageNotFoundComponent, SideNavComponent],
+  declarations: [AppComponent, HomeComponent, PageNotFoundComponent, SideNavComponent,LoginComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -45,9 +46,13 @@ import { MaterialModule } from './material.module'
     HttpClientModule,
     FlexLayoutModule,
     MaterialModule,
+    FormsModule,
+    ReactiveFormsModule, 
     
   ],
-  providers: [],
+  providers: [
+    AuthService
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

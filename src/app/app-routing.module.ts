@@ -7,6 +7,7 @@ import { ManagerModule } from './manager/manager.module';
 import { UserModule } from './user/user.module';
 import { PosModule } from './pos/pos.module';
 import { InventoryModule } from './inventory/inventory.module';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -16,6 +17,8 @@ const routes: Routes = [
   { path: 'pos', loadChildren:()=>PosModule },
   { path: 'inventory', loadChildren:()=>InventoryModule },
   { path: '**', component: PageNotFoundComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'login/:redirectUrl', component: LoginComponent },
 
 ]
 

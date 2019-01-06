@@ -17,6 +17,7 @@ import { ObservableMedia } from '@angular/flex-layout'
    
   },
 
+
   `,
   ],
 
@@ -25,7 +26,7 @@ import { ObservableMedia } from '@angular/flex-layout'
       <mat-toolbar color="primary" fxLayoutGap="20px" class="app-toolbar">
         <button mat-icon-button><mat-icon>menu</mat-icon></button>
         <a mat-icon-button routerLink="/home"><h1>Lemon-mart</h1></a>
-        <mat-icon svgIcon="lemon"></mat-icon>
+       <mat-icon  style="font-size: 16px !important" svgIcon="lemon"></mat-icon>
         <span class="flex-spacer"></span>
 
         <button  mat-mini-fab routerLink="/user/profileuser" 
