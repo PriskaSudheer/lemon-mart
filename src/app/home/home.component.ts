@@ -1,17 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth/auth.service';
+import { Component, OnInit } from '@angular/core'
 
+import { AuthService } from '../auth/auth.service'
 @Component({
   selector: 'app-home',
-  styles: [
-    `
-      .app-container {
-        fxlayout: column;
-        margin-top: 32px;
-      }
-    `,
-  ],
-
   template: `
     <div *ngIf="!(authService.authStatus | async).isAuthenticated">
       <app-login></app-login>
@@ -21,12 +12,7 @@ import { AuthService } from '../auth/auth.service';
     </div>
   `,
 })
-export class HomeComponent implements OnInit {
-  constructor(public authService: AuthService){
-    
-  }
-
-  ngOnInit() {
-  
-  }
+export class HomeComponent {
+  constructor(public authService: AuthService) {}
 }
+

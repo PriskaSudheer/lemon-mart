@@ -1,7 +1,8 @@
-import { Component } from '@angular/core'
-import { DomSanitizer } from '@angular/platform-browser'
-import { MatIconRegistry } from '@angular/material'
-import { ObservableMedia } from '@angular/flex-layout'
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { ObservableMedia } from '@angular/flex-layout';
+import { AuthService } from './auth/auth.service';
+import { MatIconRegistry, MatSidenav } from '@angular/material';
 
 @Component({
   selector: 'app-root',
@@ -14,46 +15,74 @@ import { ObservableMedia } from '@angular/flex-layout'
     bottom: 0;
     left: 0;
     right: 0;
-   
-  },
+    }
+    .app-is-mobile .app-toolbar {
+       position: fixed;
+        z-index: 2;   
+    }
+    .app-sidenav-container {
+    flex: 1; 
+  }
+  .app-is-mobile .app-sidenav-container {
+     flex: 1 0 auto;   
+     mat-sidenav {
+         width: 200px;    
+      } 
+    }
 
 
   `,
   ],
 
   template: `
-    <div class="app-container">
-      <mat-toolbar color="primary" fxLayoutGap="20px" class="app-toolbar">
-        <button mat-icon-button><mat-icon>menu</mat-icon></button>
-        <a mat-icon-button routerLink="/home"><h1>Lemon-mart</h1></a>
-       <mat-icon  style="font-size: 16px !important" svgIcon="lemon"></mat-icon>
+  <div class="app-container">
+    <mat-toolbar color="primary" fxLayoutGap="100px" class="app-toolbar"
+      [class.app-is-mobile]="media.isActive('xs')" *ngIf="authService.authStatus | async as authStatus">
+        <button *ngIf="authStatus.isAuthenticated" mat-icon-button (click)="sidenav.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <a mat-icon-button routerLink="/home">
+          <mat-icon svgIcon="lemon"></mat-icon><span class="mat-h2">LemonMart</span>
+        </a>
         <span class="flex-spacer"></span>
-
-        <button  mat-mini-fab routerLink="/user/profileuser" 
-        matTooltip="Profile" aria-label="User Profile">
-          <mat-icon>account_circle</mat-icon>
+        <button *ngIf="authStatus.isAuthenticated" mat-mini-fab routerLink="/user/profileuser"
+          matTooltip="Profile" aria-label="User Profile"><mat-icon>account_circle</mat-icon>
         </button>
-
-        <button  mat-mini-fab routerLink="/user/logout" 
-         matTooltip="Logout" aria-label="Logout">
-          <mat-icon>lock_open</mat-icon>
+        <button *ngIf="authStatus.isAuthenticated" mat-mini-fab routerLink="/user/logout"
+          matTooltip="Logout" aria-label="Logout"><mat-icon>lock_open</mat-icon>
         </button>
-      </mat-toolbar>
-      <router-outlet></router-outlet>
-    </div>
+    </mat-toolbar>
+    <mat-sidenav-container class="app-sidenav-container">
+      <mat-sidenav #sidenav [mode]="media.isActive('xs') ? 'over' : 'side'"
+                  [fixedInViewport]="media.isActive('xs')" fixedTopGap="56">
+        <app-navigation-menu></app-navigation-menu>
+      </mat-sidenav>
+      <mat-sidenav-content>
+        <router-outlet class="app-container"></router-outlet>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
   `,
 })
-export class AppComponent {
-  title = 'lemon-mart'
-
+export class AppComponent implements OnInit {
+  @ViewChild('sidenav') public sideNav: MatSidenav
   constructor(
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,
+    public authService: AuthService,
     public media: ObservableMedia
   ) {
     iconRegistry.addSvgIcon(
       'lemon',
       sanitizer.bypassSecurityTrustResourceUrl('assets/img/icons/lemon.svg')
     )
+  }
+
+  ngOnInit() {
+    this.authService.authStatus.subscribe(authStatus => {
+      if (!authStatus.isAuthenticated) {
+        this.sideNav.close()
+      }
+    })
   }
 }
