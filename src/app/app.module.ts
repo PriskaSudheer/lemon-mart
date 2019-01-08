@@ -28,6 +28,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SimpleDialogComponent, UiService } from './common/uiservice';
 import { AuthHttpInterceptor } from './auth/auth-http-interceptor';
 import { NavigationMenuComponent } from './user/navigation-menu/navigation-menu.component';
+import { AuthGuard } from './auth/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,9 @@ import { NavigationMenuComponent } from './user/navigation-menu/navigation-menu.
   ],
   providers: [
     AuthService,
+    AuthGuard,
     UiService,
+   
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthHttpInterceptor,

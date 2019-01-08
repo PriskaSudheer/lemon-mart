@@ -8,11 +8,12 @@ import { UserModule } from './user/user.module';
 import { PosModule } from './pos/pos.module';
 import { InventoryModule } from './inventory/inventory.module';
 import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './auth/auth-guard.service';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'manager', loadChildren:()=>ManagerModule},
+  { path: 'manager', loadChildren:()=>ManagerModule,canLoad:[AuthGuard]},
   { path: 'user', loadChildren:()=>UserModule }, 
   { path: 'pos', loadChildren:()=>PosModule },
   { path: 'inventory', loadChildren:()=>InventoryModule },

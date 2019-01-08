@@ -17,7 +17,12 @@ export interface IAuthStatus {
 interface IServerAuthResponse {
   accessToken: string
 }
-
+export interface IAuthService {
+  authStatus: BehaviorSubject<IAuthStatus>
+  login(email: string, password: string): Observable<IAuthStatus>
+  logout()
+  getToken(): string
+}
 export const defaultAuthStatus = {
   isAuthenticated: false,
   userRole: Role.None,
@@ -26,7 +31,7 @@ export const defaultAuthStatus = {
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService extends CacheService {
+export class AuthService extends CacheService implements IAuthService {
   private readonly authProvider: (
     email: string,
     password: string
