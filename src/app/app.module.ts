@@ -30,6 +30,8 @@ import { AuthHttpInterceptor } from './auth/auth-http-interceptor';
 import { NavigationMenuComponent } from './user/navigation-menu/navigation-menu.component';
 import { AuthGuard } from './auth/auth-guard.service';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +39,9 @@ import { AuthGuard } from './auth/auth-guard.service';
     PageNotFoundComponent,
     SideNavComponent,
     LoginComponent,
-    NavigationMenuComponent
+    NavigationMenuComponent,
+    
+    
   ],
   imports: [
     BrowserModule,
@@ -58,6 +62,7 @@ import { AuthGuard } from './auth/auth-guard.service';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    
 
   ],
   providers: [

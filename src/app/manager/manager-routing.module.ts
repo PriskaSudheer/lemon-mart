@@ -6,6 +6,9 @@ import { ReceiptLookupComponent } from './receipt-lookup/receipt-lookup.componen
 import { UserManagementComponent } from './user-management/user-management.component';
 import { AuthGuard } from '../auth/auth-guard.service';
 import { Role } from '../auth/role.enum';
+import { ViewUserComponent } from '../user/view-user/view-user.component';
+import { UserTableComponent } from './user-table/user-table.component';
+import { UserResolve } from '../user/user/user.resolve';
 const routes: Routes = [
   {
     path: '',
@@ -13,19 +16,31 @@ const routes: Routes = [
       { path: '', redirectTo: '/manager/home', pathMatch: 'full' },
       { path: 'home', 
       component: ManagerHomeComponent,
-      canActivate:[AuthGuard],
+      //canActivate: [AuthGuard],
       data:{
         expectedRole:Role.Manager,
       },
      },
-      { 
-        path: 'users', 
-        component: UserManagementComponent,
-        canActivate:[AuthGuard],
-        data:{
-          expectedRole:Role.Manager,
-       },
+     {
+      path: 'users',
+      component: UserManagementComponent,
+      children: [
+        { path: '', component: UserTableComponent, outlet: 'master' },
+        {
+          path: 'user',
+          component: ViewUserComponent,
+          outlet: 'detail',
+          resolve: {
+            user: UserResolve,
+          },
+        },
+      ],
+      //canActivate: [AuthGuard],
+     // canActivateChild: [AuthGuard],
+      data: {
+        expectedRole: Role.Manager,
       },
+    },
       { 
         path: 'receipts', 
         component: ReceiptLookupComponent,

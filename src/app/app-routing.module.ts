@@ -10,16 +10,20 @@ import { InventoryModule } from './inventory/inventory.module';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth/auth-guard.service';
 
-const routes: Routes = [
+  const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'manager', loadChildren:()=>ManagerModule,canLoad:[AuthGuard]},
-  { path: 'user', loadChildren:()=>UserModule }, 
-  { path: 'pos', loadChildren:()=>PosModule },
-  { path: 'inventory', loadChildren:()=>InventoryModule },
-  { path: '**', component: PageNotFoundComponent },
   { path: 'login', component: LoginComponent },
   { path: 'login/:redirectUrl', component: LoginComponent },
+  {
+    path: 'manager',
+    loadChildren: () => ManagerModule,
+    canLoad: [AuthGuard],
+  },
+  { path: 'user', loadChildren: () => UserModule },
+  { path: 'pos', loadChildren: () => PosModule },
+  { path: 'inventory', loadChildren: () => InventoryModule },
+  { path: '**', component: PageNotFoundComponent },
 
 ]
 

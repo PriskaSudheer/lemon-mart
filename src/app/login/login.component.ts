@@ -6,36 +6,40 @@ import { Role } from '../auth/role.enum';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { PasswordValidation } from '../common/validations';
 import { EmailValidation } from '../common/validations';
-import { UiService } from '../common/uiservice'
+import { UiService } from '../common/uiservice';
 
 @Component({
-    selector: 'app-login',
-    templateUrl: 'login.component.html',
-    styles: [`
-    .error { 
-     color: red   
-     }    `,
-        `  div[fxLayout] {margin-top: 32px;}    `,
-    ],
+  selector: 'app-login',
+  templateUrl: 'login.component.html',
+  styles: [
+    `
+    .error {
+        color: red
+    }
+    `,
+    `
+    div[fxLayout] {margin-top: 32px;}
+    `,
+  ],
 })
-
 export class LoginComponent implements OnInit {
-    loginForm: FormGroup
-    loginError = ''
-    redirectUrl
-    constructor(
-        private formBuilder: FormBuilder,
-        private authService: AuthService,
-        private router: Router,
-        private route: ActivatedRoute,
-        private uiservice: UiService
-    ) {
-        route.paramMap.subscribe(params => (this.redirectUrl = params.get('redirectUrl')))
-    }
-    ngOnInit() {
-        this.buildLoginForm()
-    }
-    
+  loginForm: FormGroup
+  loginError = ''
+  redirectUrl
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private uiService: UiService
+  ) {
+    route.paramMap.subscribe(params => (this.redirectUrl = params.get('redirectUrl')))
+  }
+
+  ngOnInit() {
+    this.buildLoginForm()
+  }
+
   buildLoginForm() {
     this.loginForm = this.formBuilder.group({
       email: ['', EmailValidation],
@@ -48,15 +52,15 @@ export class LoginComponent implements OnInit {
       .login(submittedForm.value.email, submittedForm.value.password)
       .subscribe(authStatus => {
         if (authStatus.isAuthenticated) {
-          this.uiservice.showToast(`Welcome! Role: ${authStatus.userRole}`)
+          this.uiService.showToast(`Welcome! Role: ${authStatus.userRole}`)
           this.router.navigate([
             this.redirectUrl || this.homeRoutePerRole(authStatus.userRole),
           ])
         }
-    }, error => (this.loginError = error))
-}
- 
-homeRoutePerRole(role: Role) {
+      }, error => (this.loginError = error))
+  }
+
+  homeRoutePerRole(role: Role) {
     switch (role) {
       case Role.Cashier:
         return '/pos'
@@ -67,7 +71,6 @@ homeRoutePerRole(role: Role) {
       default:
         return '/user/profile'
     }
-  }  
-      
+  }
 }
 

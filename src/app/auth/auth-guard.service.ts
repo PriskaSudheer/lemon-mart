@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable } from '@angular/core';
 import {
   CanActivate,
   Router,
@@ -6,41 +6,45 @@ import {
   RouterStateSnapshot,
   CanLoad,
   CanActivateChild,
-} from '@angular/router'
-import { AuthService, IAuthStatus } from './auth.service'
-import { Observable } from 'rxjs'
-import { Route } from '@angular/compiler/src/core'
-import { Role } from './role.enum'
-import { UiService } from '../common/uiservice'
+} from '@angular/router';
+import { AuthService, IAuthStatus } from './auth.service';
+import { Observable } from 'rxjs';
+import { Route } from '@angular/compiler/src/core';
+import { Role } from './role.enum';
+import { UiService } from '../common/uiservice';
+
 
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
-    protected currentAuthStatus: IAuthStatus
-    constructor(
-      protected authService: AuthService,
-      protected router: Router,
-      private uiService: UiService
-    ){
-        this.authService.authStatus.subscribe(
-          authStatus => (this.currentAuthStatus = authStatus)
-        )
-      }
-      canLoad(route: Route): boolean | Observable<boolean> | Promise<boolean> {
-        return this.checkLogin()
-      }
-      canActivate(
-        route: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot
-      ): boolean | Observable<boolean> | Promise<boolean> {
-        return this.checkLogin(route)
-      }
-      canActivateChild(
-        childRoute: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot
-      ): boolean | Observable<boolean> | Promise<boolean> {
-        return this.checkLogin(childRoute)
-      }
-      
+  protected currentAuthStatus: IAuthStatus
+  constructor(
+    protected authService: AuthService,
+    protected router: Router,
+    private uiService: UiService
+  ) {
+    this.authService.authStatus.subscribe(
+      authStatus => (this.currentAuthStatus = authStatus)
+    )
+  }
+
+  canLoad(route: Route): boolean | Observable<boolean> | Promise<boolean> {
+    return this.checkLogin()
+  }
+
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): boolean | Observable<boolean> | Promise<boolean> {
+    return this.checkLogin(route)
+  }
+
+  canActivateChild(
+    childRoute: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): boolean | Observable<boolean> | Promise<boolean> {
+    return this.checkLogin(childRoute)
+  }
+
   protected checkLogin(route?: ActivatedRouteSnapshot) {
     let roleMatch = true
     let params: any
@@ -65,6 +69,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
 
     return true
   }
+
   private showAlert(isAuth: boolean, roleMatch: boolean) {
     if (!isAuth) {
       this.uiService.showToast('You must login to continue')
@@ -74,5 +79,4 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
       this.uiService.showToast('You do not have the permissions to view this resource')
     }
   }
-
 }

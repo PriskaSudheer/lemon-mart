@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, throwError as observableThrowError } from 
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { AuthService, IAuthStatus } from '../../auth/auth.service';
-import { CacheService } from '../../auth/cache.service';
+import { CacheService } from '../../common/cache.service';
 import { transformError } from '../../common/common';
 import { IUser, User } from './user';
 
